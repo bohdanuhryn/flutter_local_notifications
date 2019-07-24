@@ -163,7 +163,7 @@ class FlutterLocalNotificationsPlugin {
   /// For example, specifying a hourly interval means the first time the notification will be an hour after the method has been called and then every hour after that.
   /// [multiplyInterval] scales intervals. For example, if [repeatInterval] equals [RepeatInterval.Daily]
   /// and [multiplyInterval] equals 3, the total interval will be 3 days
-  Future<void> periodicallyShow(int id, String title, String body,
+  Future<void> periodicallyShow(int id, String title, Object body,
       RepeatInterval repeatInterval, NotificationDetails notificationDetails,
       {String payload, int multiplyInterval = 1}) async {
     _validateId(id);
@@ -182,7 +182,7 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Same as [FlutterLocalNotificationsPlugin.periodicallyShow] with additional parameter [notificationTime]
-  Future<void> showEveryFewDaysAtTime(int id, String title, String body,
+  Future<void> showEveryFewDaysAtTime(int id, String title, Object body,
       NotificationDetails notificationDetails, Time notificationTime,
       {String payload, int multiplyInterval = 1}) async {
     _validateId(id);

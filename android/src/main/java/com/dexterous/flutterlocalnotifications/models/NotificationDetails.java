@@ -15,7 +15,9 @@ import com.dexterous.flutterlocalnotifications.models.styles.StyleInformation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class NotificationDetails {
     private static final String PAYLOAD = "payload";
@@ -104,7 +106,7 @@ public class NotificationDetails {
 
     public Integer id;
     public String title;
-    public String body;
+    public Object body;
     public String icon;
     public String channelId = "Default_Channel_Id";
     public String channelName;
@@ -147,6 +149,21 @@ public class NotificationDetails {
     public Integer visibility;
     public Boolean allowWhileIdle;
 
+    public String getBody() {
+        String body;
+        if (this.body instanceof List) {
+            try {
+                List<String> bodies = (List<String>) this.body;
+                int bodyPosition = new Random().nextInt() % bodies.size();
+                body = bodies.get(bodyPosition < 0 ? -bodyPosition : bodyPosition);
+            } catch (Exception e) {
+                body = "";
+            }
+        } else {
+            body = (String) this.body;
+        }
+        return body;
+    }
 
     // Note: this is set on the Android to save details about the icon that should be used when re-hydrating scheduled notifications when a device has been restarted.
     public Integer iconResourceId;
@@ -156,7 +173,7 @@ public class NotificationDetails {
         notificationDetails.payload = (String) arguments.get(PAYLOAD);
         notificationDetails.id = (Integer) arguments.get(ID);
         notificationDetails.title = (String) arguments.get(TITLE);
-        notificationDetails.body = (String) arguments.get(BODY);
+        notificationDetails.body = arguments.get(BODY);
         if (arguments.containsKey(MILLISECONDS_SINCE_EPOCH)) {
             notificationDetails.millisecondsSinceEpoch = (Long) arguments.get(MILLISECONDS_SINCE_EPOCH);
         }
