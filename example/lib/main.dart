@@ -89,6 +89,12 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   PaddedRaisedButton(
+                    buttonText: 'Show notification every minute with body from array',
+                    onPressed: () async {
+                      await _repeatEveryMinuteNotificationFromArray(1);
+                    },
+                  ),
+                  PaddedRaisedButton(
                     buttonText: 'Show notification every 2 days at 12:00',
                     onPressed: () async {
                       await _repeatEveryDaysAtTimeNotification(2, Time(12, 0, 0));
@@ -582,6 +588,26 @@ class _HomePageState extends State<HomePage> {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating every $minutes minutes title',
         'repeating every $minutes minutes body', RepeatInterval.EveryMinute, platformChannelSpecifics,
+        multiplyInterval: minutes);
+  }
+
+  Future<void> _repeatEveryMinuteNotificationFromArray(int minutes) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'repeating channel id',
+        'repeating channel name',
+        'repeating description');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    final bodies = [
+      'repeating body 1',
+      'repeating body 2',
+      'repeating body 3',
+      'repeating body 4',
+      'repeating body 5'
+    ];
+    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating every $minutes minutes title',
+        bodies, RepeatInterval.EveryMinute, platformChannelSpecifics,
         multiplyInterval: minutes);
   }
 

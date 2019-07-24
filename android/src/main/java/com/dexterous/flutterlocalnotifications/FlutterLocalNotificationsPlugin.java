@@ -120,7 +120,7 @@ public class FlutterLocalNotificationsPlugin implements MethodCallHandler, Plugi
         DefaultStyleInformation defaultStyleInformation = (DefaultStyleInformation) notificationDetails.styleInformation;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, notificationDetails.channelId)
                 .setContentTitle(defaultStyleInformation.htmlFormatTitle ? fromHtml(notificationDetails.title) : notificationDetails.title)
-                .setContentText(defaultStyleInformation.htmlFormatBody ? fromHtml(notificationDetails.body) : notificationDetails.body)
+                .setContentText(defaultStyleInformation.htmlFormatBody ? fromHtml(notificationDetails.getBody()) : notificationDetails.getBody())
                 .setTicker(notificationDetails.ticker)
                 .setAutoCancel(BooleanUtils.getValue(notificationDetails.autoCancel))
                 .setContentIntent(pendingIntent)
