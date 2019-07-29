@@ -62,6 +62,21 @@ class Time {
   }
 }
 
+class NotificationContent {
+
+  final String title;
+  final Object body;
+
+  NotificationContent._internal(this.title, this.body);
+
+  NotificationContent(this.title, String body) : this.body = body;
+
+  factory NotificationContent.withBodyAsList(String title, List<String> body) {
+    return NotificationContent._internal(title, body);
+  }
+  
+}
+
 class FlutterLocalNotificationsPlugin {
   factory FlutterLocalNotificationsPlugin() => _instance;
 
@@ -111,7 +126,7 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Show a notification with an optional payload that will be passed back to the app when a notification is tapped
-  Future<void> show(int id, String title, String body,
+  Future<void> show(int id, NotificationContent content,
       NotificationDetails notificationDetails,
       {String payload}) async {
     _validateId(id);
@@ -119,8 +134,8 @@ class FlutterLocalNotificationsPlugin {
     _retrievePlatformSpecificNotificationDetails(notificationDetails);
     await _channel.invokeMethod('show', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'platformSpecifics': serializedPlatformSpecifics,
       'payload': payload ?? ''
     });
@@ -140,7 +155,7 @@ class FlutterLocalNotificationsPlugin {
   /// Schedules a notification to be shown at the specified time with an optional payload that is passed through when a notification is tapped
   /// The [androidAllowWhileIdle] parameter is Android-specific and determines if the notification should still be shown at the specified time
   /// even when in a low-power idle mode.
-  Future<void> schedule(int id, String title, String body,
+  Future<void> schedule(int id, NotificationContent content,
       DateTime scheduledDate, NotificationDetails notificationDetails,
       {String payload, bool androidAllowWhileIdle = false}) async {
     _validateId(id);
@@ -151,8 +166,8 @@ class FlutterLocalNotificationsPlugin {
     }
     await _channel.invokeMethod('schedule', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'millisecondsSinceEpoch': scheduledDate.millisecondsSinceEpoch,
       'platformSpecifics': serializedPlatformSpecifics,
       'payload': payload ?? ''
@@ -163,7 +178,7 @@ class FlutterLocalNotificationsPlugin {
   /// For example, specifying a hourly interval means the first time the notification will be an hour after the method has been called and then every hour after that.
   /// [multiplyInterval] scales intervals. For example, if [repeatInterval] equals [RepeatInterval.Daily]
   /// and [multiplyInterval] equals 3, the total interval will be 3 days
-  Future<void> periodicallyShow(int id, String title, Object body,
+  Future<void> periodicallyShow(int id, NotificationContent content,
       RepeatInterval repeatInterval, NotificationDetails notificationDetails,
       {String payload, int multiplyInterval = 1}) async {
     _validateId(id);
@@ -171,8 +186,8 @@ class FlutterLocalNotificationsPlugin {
     _retrievePlatformSpecificNotificationDetails(notificationDetails);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'calledAt': DateTime
           .now()
           .millisecondsSinceEpoch,
@@ -184,15 +199,15 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Same as [FlutterLocalNotificationsPlugin.periodicallyShow] with additional parameter [notificationTime]
-  Future<void> showEveryFewDaysAtTime(int id, String title, Object body,
+  Future<void> showEveryFewDaysAtTime(int id, NotificationContent content,
       NotificationDetails notificationDetails, Time notificationTime,
       {String payload, int multiplyInterval = 1}) async {
     _validateId(id);
     var serializedPlatformSpecifics = _retrievePlatformSpecificNotificationDetails(notificationDetails);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'calledAt': DateTime.now().millisecondsSinceEpoch,
       'repeatInterval': RepeatInterval.Daily.index,
       'repeatTime': notificationTime.toMap(),
@@ -203,7 +218,7 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Shows a notification on a daily interval at the specified time
-  Future<void> showDailyAtTime(int id, String title, String body,
+  Future<void> showDailyAtTime(int id, NotificationContent content,
       Time notificationTime, NotificationDetails notificationDetails,
       {String payload}) async {
     _validateId(id);
@@ -211,8 +226,8 @@ class FlutterLocalNotificationsPlugin {
     _retrievePlatformSpecificNotificationDetails(notificationDetails);
     await _channel.invokeMethod('showDailyAtTime', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'calledAt': DateTime
           .now()
           .millisecondsSinceEpoch,
@@ -224,7 +239,7 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Shows a notification on a daily interval at the specified time
-  Future<void> showWeeklyAtDayAndTime(int id, String title, String body,
+  Future<void> showWeeklyAtDayAndTime(int id, NotificationContent content,
       Day day, Time notificationTime, NotificationDetails notificationDetails,
       {String payload}) async {
     _validateId(id);
@@ -232,8 +247,8 @@ class FlutterLocalNotificationsPlugin {
     _retrievePlatformSpecificNotificationDetails(notificationDetails);
     await _channel.invokeMethod('showWeeklyAtDayAndTime', <String, dynamic>{
       'id': id,
-      'title': title,
-      'body': body,
+      'title': content.title,
+      'body': content.body,
       'calledAt': DateTime
           .now()
           .millisecondsSinceEpoch,

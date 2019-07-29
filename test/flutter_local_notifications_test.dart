@@ -34,7 +34,7 @@ void main() {
           NotificationDetails(null, iOSPlatformChannelSpecifics);
 
       await flutterLocalNotificationsPlugin
-          .show(0, title, body, platformChannelSpecifics, payload: payload);
+          .show(0, NotificationContent(title, body), platformChannelSpecifics, payload: payload);
       verify(mockChannel.invokeMethod('show', <String, dynamic>{
         'id': id,
         'title': title,
@@ -50,7 +50,7 @@ void main() {
           IOSNotificationDetails();
       NotificationDetails platformChannelSpecifics =
           NotificationDetails(null, iOSPlatformChannelSpecifics);
-      await flutterLocalNotificationsPlugin.schedule(id, title, body,
+      await flutterLocalNotificationsPlugin.schedule(id, NotificationContent(title, body),
           scheduledNotificationDateTime, platformChannelSpecifics);
       verify(mockChannel.invokeMethod('schedule', <String, dynamic>{
         'id': id,
@@ -94,7 +94,7 @@ void main() {
           NotificationDetails(androidPlatformChannelSpecifics, null);
 
       await flutterLocalNotificationsPlugin
-          .show(0, title, body, platformChannelSpecifics, payload: payload);
+          .show(0, NotificationContent(title, body), platformChannelSpecifics, payload: payload);
       verify(mockChannel.invokeMethod('show', <String, dynamic>{
         'id': id,
         'title': title,
@@ -115,7 +115,7 @@ void main() {
           NotificationDetails(androidPlatformChannelSpecifics, null);
       var androidPlatformChannelSpecificsMap = androidPlatformChannelSpecifics.toMap();
       androidPlatformChannelSpecificsMap['allowWhileIdle'] = false;
-      await flutterLocalNotificationsPlugin.schedule(id, title, body,
+      await flutterLocalNotificationsPlugin.schedule(id, NotificationContent(title, body),
           scheduledNotificationDateTime, platformChannelSpecifics);
       verify(mockChannel.invokeMethod('schedule', <String, dynamic>{
         'id': id,

@@ -192,7 +192,13 @@ typedef NS_ENUM(NSInteger, RepeatInterval) {
     NotificationDetails *notificationDetails = [[NotificationDetails alloc]init];
     notificationDetails.id = call.arguments[ID];
     notificationDetails.title = call.arguments[TITLE];
-    notificationDetails.body = call.arguments[BODY];
+    if ([call.arguments[BODY] isKindOfClass:[NSMutableArray class]]) {
+        NSMutableArray *bodies = [call.arguments mutableArrayValueForKey:BODY];
+        NSInteger randPosition = rand() % bodies.count;
+        notificationDetails.body = bodies[randPosition];
+    } else {
+        notificationDetails.body = call.arguments[BODY];
+    }
     notificationDetails.payload = call.arguments[PAYLOAD];
     notificationDetails.presentAlert = displayAlert;
     notificationDetails.presentSound = playSound;
