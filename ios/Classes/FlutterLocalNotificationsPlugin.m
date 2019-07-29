@@ -203,10 +203,12 @@ typedef NS_ENUM(NSInteger, RepeatInterval) {
 - (void)showNotification:(FlutterMethodCall * _Nonnull)call result:(FlutterResult _Nonnull)result {
     NotificationDetails *notificationDetails = [[NotificationDetails alloc]init];
     notificationDetails.id = call.arguments[ID];
-    if(call.arguments[TITLE] != [NSNull null]) {
-        notificationDetails.title = call.arguments[TITLE];
-    }
-    if(call.arguments[BODY] != [NSNull null]) {
+    notificationDetails.title = call.arguments[TITLE];
+    if ([call.arguments[BODY] isKindOfClass:[NSMutableArray class]]) {
+        NSMutableArray *bodies = [call.arguments mutableArrayValueForKey:BODY];
+        NSInteger randPosition = rand() % bodies.count;
+        notificationDetails.body = bodies[randPosition];
+    } else {
         notificationDetails.body = call.arguments[BODY];
     }
     notificationDetails.payload = call.arguments[PAYLOAD];
