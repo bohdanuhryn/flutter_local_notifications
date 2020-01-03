@@ -353,7 +353,7 @@ class _HomePageState extends State<HomePage> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', null, platformChannelSpecifics,
+        0, NotificationContent('plain title', null), platformChannelSpecifics,
         payload: 'item x');
   }
 
@@ -486,7 +486,7 @@ class _HomePageState extends State<HomePage> {
     var platformChannelSpecifics =
         NotificationDetails(androidPlatformChannelSpecifics, null);
     await flutterLocalNotificationsPlugin.show(
-        0, 'notification title', 'notification body', platformChannelSpecifics);
+        0, NotificationContent('notification title', 'notification body'), platformChannelSpecifics);
   }
 
   Future<void> _showBigTextNotification() async {
@@ -899,8 +899,8 @@ class _HomePageState extends State<HomePage> {
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(0, 'public notification title',
-        'public notification body', platformChannelSpecifics,
+    await flutterLocalNotificationsPlugin.show(0, NotificationContent('public notification title',
+        'public notification body'), platformChannelSpecifics,
         payload: 'item x');
   }
 
