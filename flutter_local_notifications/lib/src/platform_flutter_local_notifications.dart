@@ -164,7 +164,7 @@ class AndroidFlutterLocalNotificationsPlugin
       {Time notificationTime, AndroidNotificationDetails notificationDetails, String payload}) async {
     validateId(id);
 
-    await _channel.invokeMethod('showEveryFewDaysAtTime', <String, dynamic>{
+    await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
       'title': content.title,
       'body': content.body,
@@ -257,8 +257,7 @@ class IOSFlutterLocalNotificationsPlugin
   Future<void> showEveryFewDaysAtTime(int id, NotificationContent content, int days,
       {Time notificationTime, IOSNotificationDetails notificationDetails, String payload}) async {
     validateId(id);
-
-    await _channel.invokeMethod('showEveryFewDaysAtTime', <String, dynamic>{
+    await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
       'title': content.title,
       'body': content.body,
@@ -313,7 +312,7 @@ class IOSFlutterLocalNotificationsPlugin
   @override
   Future<void> periodicallyShow(
       int id, NotificationContent content, RepeatInterval repeatInterval,
-      {IOSNotificationDetails notificationDetails, String payload}) async {
+      {int multiplyInterval, IOSNotificationDetails notificationDetails, String payload}) async {
     validateId(id);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
@@ -321,6 +320,7 @@ class IOSFlutterLocalNotificationsPlugin
       'body': content.body,
       'calledAt': DateTime.now().millisecondsSinceEpoch,
       'repeatInterval': repeatInterval.index,
+      'multiplyInterval': multiplyInterval,
       'platformSpecifics': notificationDetails?.toMap(),
       'payload': payload ?? ''
     });

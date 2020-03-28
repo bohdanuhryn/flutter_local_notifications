@@ -196,10 +196,9 @@ class FlutterLocalNotificationsPlugin {
               notificationDetails: notificationDetails?.android,
               payload: payload, multiplyInterval: multiplyInterval);
     } else if (_platform.isIOS) {
-      await resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
+      await resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
           ?.periodicallyShow(id, content, repeatInterval,
-              notificationDetails: notificationDetails?.iOS, payload: payload);
+          notificationDetails: notificationDetails?.iOS, payload: payload, multiplyInterval: multiplyInterval);
     } else {
       await FlutterLocalNotificationsPlatform.instance
           ?.periodicallyShow(id, content, repeatInterval);

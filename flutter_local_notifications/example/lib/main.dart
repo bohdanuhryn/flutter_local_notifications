@@ -237,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                   PaddedRaisedButton(
                     buttonText: 'Show notification every 2 days at 12:00',
                     onPressed: () async {
-                      await _repeatEveryDaysAtTimeNotification(2, Time(23, 25, 0));
+                      await _repeatEveryDaysAtTimeNotification(2, Time(3, 51, 0));
                     },
                   ),
                   PaddedRaisedButton(
