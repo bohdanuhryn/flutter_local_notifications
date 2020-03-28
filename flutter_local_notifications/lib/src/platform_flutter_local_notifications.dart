@@ -128,15 +128,15 @@ class AndroidFlutterLocalNotificationsPlugin
   }
 
   @override
-  Future<void> show(int id, NotificationContent content,
+  Future<void> show(int id, String title, String body,
       {AndroidNotificationDetails notificationDetails, String payload}) {
     validateId(id);
     return _channel.invokeMethod(
       'show',
       <String, dynamic>{
         'id': id,
-        'title': content.title,
-        'body': content.body,
+        'title': title,
+        'body': body,
         'payload': payload ?? '',
         'platformSpecifics': notificationDetails?.toMap(),
       },
@@ -145,13 +145,13 @@ class AndroidFlutterLocalNotificationsPlugin
 
   @override
   Future<void> periodicallyShow(
-      int id, NotificationContent content, RepeatInterval repeatInterval,
+      int id, String title, String body, RepeatInterval repeatInterval,
       {AndroidNotificationDetails notificationDetails, String payload, int multiplyInterval}) async {
     validateId(id);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
-      'title': content.title,
-      'body':content.body,
+      'title': title,
+      'body': body,
       'calledAt': DateTime.now().millisecondsSinceEpoch,
       'repeatInterval': repeatInterval.index,
       'multiplyInterval': multiplyInterval,
@@ -294,15 +294,15 @@ class IOSFlutterLocalNotificationsPlugin
   }
 
   @override
-  Future<void> show(int id, NotificationContent content,
+  Future<void> show(int id, String title, String body,
       {IOSNotificationDetails notificationDetails, String payload}) {
     validateId(id);
     return _channel.invokeMethod(
       'show',
       <String, dynamic>{
         'id': id,
-        'title': content.title,
-        'body': content.body,
+        'title': title,
+        'body': body,
         'payload': payload ?? '',
         'platformSpecifics': notificationDetails?.toMap(),
       },
@@ -311,13 +311,13 @@ class IOSFlutterLocalNotificationsPlugin
 
   @override
   Future<void> periodicallyShow(
-      int id, NotificationContent content, RepeatInterval repeatInterval,
+      int id, String title, String body, RepeatInterval repeatInterval,
       {int multiplyInterval, IOSNotificationDetails notificationDetails, String payload}) async {
     validateId(id);
     await _channel.invokeMethod('periodicallyShow', <String, dynamic>{
       'id': id,
-      'title': content.title,
-      'body': content.body,
+      'title': title,
+      'body': body,
       'calledAt': DateTime.now().millisecondsSinceEpoch,
       'repeatInterval': repeatInterval.index,
       'multiplyInterval': multiplyInterval,

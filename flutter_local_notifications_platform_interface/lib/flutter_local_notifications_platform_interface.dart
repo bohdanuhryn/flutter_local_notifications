@@ -29,20 +29,15 @@ abstract class FlutterLocalNotificationsPlatform extends PlatformInterface {
   }
 
   /// Show a notification with an optional payload that will be passed back to the app when a notification is tapped on.
-  Future<void> show(int id, NotificationContent content, {String payload}) async {
+  Future<void> show(int id, String title, String body, {String payload}) async {
     throw UnimplementedError('show() has not been implemented');
   }
 
   /// Periodically show a notification using the specified interval.
   /// For example, specifying a hourly interval means the first time the notification will be an hour after the method has been called and then every hour after that.
   Future<void> periodicallyShow(
-      int id, NotificationContent content, RepeatInterval repeatInterval) {
+      int id, String title, String body, RepeatInterval repeatInterval) {
     throw UnimplementedError('periodicallyShow() has not been implemented');
-  }
-
-  /// Same as [FlutterLocalNotificationsPlugin.periodicallyShow] with additional parameter [notificationTime]
-  Future<void> showEveryFewDaysAtTime(int id, NotificationContent content, int days) {
-    throw UnimplementedError('showEveryFewDaysAtTime() has not been implemented');
   }
 
   /// Cancel/remove the notification with the specified id. This applies to notifications that have been scheduled and those that have already been presented.

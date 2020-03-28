@@ -51,3 +51,18 @@ class Time {
     };
   }
 }
+
+class NotificationContent {
+
+  final String title;
+  final Object body;
+
+  NotificationContent._internal(this.title, this.body);
+
+  NotificationContent(this.title, String body) : this.body = body;
+
+  factory NotificationContent.withBodyAsList(String title, List<String> body) {
+    return NotificationContent._internal(title, body);
+  }
+
+}

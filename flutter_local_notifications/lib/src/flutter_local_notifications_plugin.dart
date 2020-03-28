@@ -127,22 +127,22 @@ class FlutterLocalNotificationsPlugin {
   }
 
   /// Show a notification with an optional payload that will be passed back to the app when a notification is tapped.
-  Future<void> show(int id, NotificationContent content,
+  Future<void> show(int id, String title, String body,
       NotificationDetails notificationDetails,
       {String payload}) async {
     if (_platform.isAndroid) {
       await resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
-          ?.show(id, content,
+          ?.show(id, title, body,
               notificationDetails: notificationDetails?.android,
               payload: payload);
     } else if (_platform.isIOS) {
       await resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin>()
-          ?.show(id, content,
+          ?.show(id, title, body,
               notificationDetails: notificationDetails?.iOS, payload: payload);
     } else {
-      await FlutterLocalNotificationsPlatform.instance?.show(id, content);
+      await FlutterLocalNotificationsPlatform.instance?.show(id, title, body);
     }
   }
 
@@ -186,22 +186,22 @@ class FlutterLocalNotificationsPlugin {
   /// For example, specifying a hourly interval means the first time the notification will be an hour after the method has been called and then every hour after that.
   /// [multiplyInterval] scales intervals. For example, if [repeatInterval] equals [RepeatInterval.Daily]
   /// and [multiplyInterval] equals 3, the total interval will be 3 days
-  Future<void> periodicallyShow(int id, NotificationContent content,
+  Future<void> periodicallyShow(int id, String title, String body,
       RepeatInterval repeatInterval, NotificationDetails notificationDetails,
       {String payload, int multiplyInterval = 1}) async {
     if (_platform.isAndroid) {
       await resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
-          ?.periodicallyShow(id, content, repeatInterval,
+          ?.periodicallyShow(id, title, body, repeatInterval,
               notificationDetails: notificationDetails?.android,
               payload: payload, multiplyInterval: multiplyInterval);
     } else if (_platform.isIOS) {
       await resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-          ?.periodicallyShow(id, content, repeatInterval,
+          ?.periodicallyShow(id, title, body, repeatInterval,
           notificationDetails: notificationDetails?.iOS, payload: payload, multiplyInterval: multiplyInterval);
     } else {
       await FlutterLocalNotificationsPlatform.instance
-          ?.periodicallyShow(id, content, repeatInterval);
+          ?.periodicallyShow(id, title, body, repeatInterval);
     }
   }
 
@@ -222,9 +222,6 @@ class FlutterLocalNotificationsPlugin {
           notificationTime: time,
           notificationDetails: notificationDetails?.iOS,
           payload: payload);
-    } else {
-      await FlutterLocalNotificationsPlatform.instance
-          ?.showEveryFewDaysAtTime(id, content, days);
     }
   }
 

@@ -15,8 +15,8 @@ void main() {
   FlutterLocalNotificationsPlatform.instance = mock;
 
   test('show', () async {
-    await mock.show(id, NotificationContent(title, body), payload: payload);
-    verify(mock.show(id, NotificationContent(title, body), payload: captureAnyNamed('payload')));
+    await mock.show(id, title, body, payload: payload);
+    verify(mock.show(id, title, body, payload: captureAnyNamed('payload')));
   });
 
   test('cancel', () async {
